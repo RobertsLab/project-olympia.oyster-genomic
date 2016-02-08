@@ -8,16 +8,12 @@ Project Status - Active
 1) Produce a draft genome assembly for _Ostrea lurida_.     
 2) Determine how environmental information is inherited.      
 3) Develop a web-based platform for discovery and collaboration.      
-
----
-### Lab Notebooks:
-*
 ---
 ### Project Components:
 - [Genome Sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Olympia-oyster-genome-sequencing)
-- 2bRAD sequencing
-- MBD-bisulfite sequencing
-- Genomy-by-sequencing
+- [2bRAD sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Olympia-oyster-2bRAD-sequencing)
+- [MBD-bisulfite sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Olympia-oyster-MBD-BSseq)
+- [Genome-by-sequencing]()
 
 
 ### Manuscripts:    
