@@ -13,6 +13,12 @@ Project Status - Active
 ### Lab Notebooks:
 *
 ---
+### Project Components:
+- Genome Sequencing
+- 2bRAD sequencing
+- MBD-bisulfite sequencing
+- Genomy-by-sequencing
+
 
 ### Manuscripts:    
 * 
