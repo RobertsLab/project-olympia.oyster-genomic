@@ -7,7 +7,8 @@ Project Status - Active
 ### Research Objectives:   
 1) Produce a draft genome assembly for _Ostrea lurida_.     
 2) Determine how environmental information is inherited.      
-3) Develop a web-based platform for discovery and collaboration.      
+3) Develop a web-based platform for discovery and collaboration.
+
 ---
 ### Project Components:
 - [Genome Sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Olympia-oyster-genome-sequencing)
