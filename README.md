@@ -12,7 +12,7 @@ Project Status - Active
 ---
 ### Project Components:
 - [Genome Sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Genome-sequencing)
-- [2bRAD sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Olympia-oyster-2bRAD-sequencing)
+- [2bRAD sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/2bRAD-data)
 - [Whole Genome BS-Seq](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Whole-genome-bisulfite-sequencing)
 - [MBD-BS-Seq](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Olympia-oyster-MBD-BSseq)
 - [Genome-by-sequencing]()
