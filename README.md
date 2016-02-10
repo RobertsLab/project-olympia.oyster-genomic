@@ -10,7 +10,7 @@ Project Status - Active
 3) Develop a web-based platform for discovery and collaboration.
 
 ---
-### Project Components:
+### Project Components ([see wiki](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki)):
 - [Genome Sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Genome-sequencing-September-2015)
 - [2bRAD sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/2bRAD-data)
 - [Whole Genome BS-Seq](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Whole-genome-BSseq-December-2015g)
