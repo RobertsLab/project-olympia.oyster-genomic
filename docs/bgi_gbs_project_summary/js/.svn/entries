@@ -1,0 +1,54 @@
+8
+
+dir
+13
+svn://192.168.8.177/ReSeq_IndividualAutoPip_SOAP/html/js
+svn://192.168.8.177/ReSeq_IndividualAutoPip_SOAP
+
+
+
+2012-11-12T07:30:34.207050Z
+1
+liangqian
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+5db15a6c-11a2-4c25-8f70-907608948d0c
+
+report.js
+file
+
+
+
+
+2012-11-12T07:41:06.000000Z
+c573532a98efd21a25ba8ed6ab30db6b
+2012-11-12T07:30:34.207050Z
+1
+liangqian
+has-props
+
+jquery.js
+file
+
+
+
+
+2012-11-12T07:41:06.000000Z
+9118381924c51c89d9414a311ec9c97f
+2012-11-12T07:30:34.207050Z
+1
+liangqian
+has-props
+

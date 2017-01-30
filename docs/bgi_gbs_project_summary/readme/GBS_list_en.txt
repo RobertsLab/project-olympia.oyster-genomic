@@ -1,0 +1,19 @@
+upload
+|---- Cleandata                     clean reads directory
+|     |---  A.fq.gz                 sample A clean data
+|     |---  B.fq.gz                 sample B clean data
+|---- Data.stat.xls                 all the samples data statistics list
+|---- SNP.stat.xls                  all the samples SNP statistics list
+|---- Genotype.xls                  all the samples genotyping statistics list
+|---- tree                          Phylogenetic tree result directory
+|     |---  nj_tree.out.tre.png     Phylogenetic tree analysis result (png format)
+|     |---  nj_tree.out.tre.svg     Phylogenetic tree analysis result(SVG format)
+|---- PCA                           PCA result directory
+|     |---  1-2.png                 the contribution rate of component 1 and 2
+|     |---  1-3.png                 the contribution rate of component 1 and 3
+|     |---  m-n.png                 the contribution rate of component m and n
+|---- structure                     Population structure result directory
+|     |---  STRUCTURE.png           Population structureanalysis result (png format)
+|     |---  STRUCTURE.svg           Population structureanalysis result (SVG format)
+|---- index.html                    Chinese version of result report in webpage format 
+|---- index_en.html                 English version of result report in webpage format

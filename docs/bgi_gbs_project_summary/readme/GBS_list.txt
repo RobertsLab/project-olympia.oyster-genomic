@@ -1,0 +1,19 @@
+﻿upload
+|---- Cleandata                     cleanreads文件夹
+|     |---  A.fq.gz                 A样品cleanreads
+|     |---  B.fq.gz                 B样品cleanreads
+|---- Data.stat.xls                 所有样品数据统计列表
+|---- SNP.stat.xls                  所有样品SNP 统计列表
+|---- Genotype.xls                  所有样品的基因分型结果
+|---- tree                          系统发育树结果目录
+|     |---  nj_tree.out.tre.png     系统发育树分析结果(png格式)
+|     |---  nj_tree.out.tre.svg     系统发育树分析结果(SVG格式)
+|---- PCA                           PCA分析结果目录
+|     |---  1-2.png                 第1组分与第2组分贡献率
+|     |---  1-3.png                 第1组分与第3组分贡献率
+|     |---  m-n.png                 第m组分与第n组分贡献率
+|---- structure                     群体结构分析结果目录
+|     |---  STRUCTURE.png           群体结构分析结果(png格式)
+|     |---  STRUCTURE.svg           群体结构分析结果(SVG格式)
+|---- index.html                    中文版网页结题报告 
+|---- index_en.html                 英文版网页结题报告

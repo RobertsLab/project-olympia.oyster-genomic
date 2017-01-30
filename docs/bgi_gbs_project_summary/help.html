@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>华大基因GBS项目帮助文档</title>
+<style type="text/css">
+body {background-color: #fff; font-size: smaller; margin: 0px 20px; padding-bottom: 20px;}
+img{
+	border:0px
+	}
+img,input{
+	vertical-align:middle
+}
+.title {
+	font-size: 24px; 
+	font-weight: 900;
+	}
+h1 {font-size: 28px; font-weight: 900; padding-top: 10px; border-top: 5px solid #bbf;}
+h2 {font-size: 22px; font-weight: 900;}
+h3, .title2 {font-size: 16px; font-weight: 900;}
+.title2 {padding-right: 1em;}
+p {font-size: 14px; text-indent: 2em;}
+img {border: 0px; margin: 10px 0;}
+.fig {font-size: 14px;}
+.center {text-align: center;}
+table {width: 700px; text-align: center; border-top: solid #000 1px; border-right: solid #000 1px; border-bottom: solid #000 1px; margin: 15px 15px 0 0; border-collapse: collapse;}
+caption {font-weight: 900;}
+tr.head {background-color: rgb(214, 227, 188); text-align: center;}
+th, td {border: solid #000 1px; font-size: 12px;}
+.listtable {width: 600px;text-align: left;border:none;margin: 15px 15px 0 0;}
+.listtable td {text-align: left;border:none;}
+.button {padding-right: 1em; padding-left: 1em; display: inline-block; border: 1px solid #000; margin-right: 1em; cursor: pointer; text-align: center; line-height: 1.5em;}
+pre {font-size: 12px; padding-left: 2em;}
+.note {color: #f00;}
+.h3 {font-size: 20px; font-weight: 900; margin-right: 1em;}
+.it {font-size: 12px;}
+</style>
+</head>
+<body> 
+<a name="top"></a><h1>GBS帮助文档</h1>
+<div id="report">
+<ol style="list-style-type: upper-roman;">
+	<li><a href="#it">标注信息分析</a></li>
+	<li><a href="#file">参考文献</a></li>
+	<li><a href="#list">分析结果文件列表</a></li>
+</ol>
+</div>
+<div class="break"></div>
+<h2><a name="it">一、标准信息分析</a></h2>
+<div class="title"><span class="h3">1.标准信息分析流程图</span></div>
+<div align="center"><img src="./images/GBS_bio.png" style = "width:600px;"/></div><br />
+<div align="center"><span>图1 标准信息分析流程</span></div>
+</div>
+<div class="break"></div>
+<div class="title"><span class="h3">2.测序序列</span></div>
+<p>测序得到的原始图像数据经base calling转化为fastq格式的原始下机序列数据 (raw data或raw reads)，fastq格式文件内容如下所示：</p>
+<pre>
+@FCB068CABXX:6:1101:1403:2159#TAGGTTAT/1
+GTAGAAGACTTATAGATTAAAATTCTCCAACATATAGATGTCCTTACACCGTTTTCCTTTGCTCAGCAGGCTCCGTGTTTGCTTGTCCTT
++
+c`bcc_c^ccde_df\c_aeff`ffcfffdfedadca^`b_eed`fe\fed\babdba^Yeebeccfdeae_eec^dbXbda`]bcbebc
+</pre>
+<p>在fastq文件中每个read共有4行信息，第1行和第3行是序列名称（通常为了节省存储空间，第三行“＋”后面的序列名称会被省略),由测序仪产生；第2行是序列；第4行是序列的测序质量，与第2行各碱基一一对应。用第四行每个字符对应的ASCII值减去64，即得到该碱基的测序质量值。例如，c对应的ASCII值为99，那么其对应的碱基质量值是35。表1为测序错误率与测序质量值简明对应关系。具体地，如果测序错误率用E表示，碱基质量值用sQ表示，则有下列关系：</p>
+<div class="center">
+sQ = -10log<sub>10</sub>E<br />
+<table style="width: 380px; margin: 5px auto;">
+	<caption>表1 测序错误率与测序质量值简明对应关系</caption>
+	<tr class="head"><th>测序错误率</th><th>测序质量值</th><th>对应字符</th></tr>
+	<tr><td class="center">5%</td><td class="center">13</td><td class="center">M</td></tr>
+	<tr><td class="center">1%</td><td class="center">20</td><td class="center">T</td></tr>
+	<tr><td class="center">0.1%</td><td class="center">30</td><td class="center">^</td></tr>
+</table>
+</div>
+<div class="title"><span class="h3">3. 数据过滤</span></div>
+<ul>
+<li{list-style:none;}>1)去除adaptor污染序列;</li><br />
+<li{list-style:none;}>2)去除低质量的reads （质量值Q≤5的碱基占整条read的50%以上的被定义为低质量reads）;</li><br />
+<li{list-style:none;}>3)实验流程中添加的P1接头中，含有4-8bp的barcode序列，不同样品的DNA片段，连接的barcode序列不同。我们根据测序数据中的barcode序列区分样品，并去掉reads中的barcode碱基;</li><br />
+<li{list-style:none;}>4)去掉无法依据barcode区分样品的reads。</li><br />
+</ul>
+<div class="title"><span class="h3">4. 比对(聚类)</span></div>
+<p>对于有参考基因组的物种，所有测序所得的reads经过SOAPaligner<sup>[<a href="#cite1">1</a>]</sup>(http://soap.genomics.org.cn)与参考序列进行比对。在比对时，所有reads都经过了如下的处理：如果一个原始的read无法比对上参考序列，其第一个和最后两个碱基将会被去除，之后再和参考序列进行比对。如果仍然无法匹配，则再去掉最后两个碱基再比对，如此迭代进行，直到能够匹配或reads短于40bp为止。如果reads短于40bp仍无法匹配，则丢弃。然后根据比对结果，计算出平均深度和覆盖度。</p>
+<p>对于无参考基因组的物种，我们使用Stacks<sup>[<a href="#cite2">2</a>]</sup>(http://creskolab.uoregon.edu/stacks/)或华大自主开发的NPGT软件包对read1进行聚类，并依据聚类结果进行下一步的snp检测。<p>
+<div class="title"><span class="h3">5. SNP检测</span></div>
+<p>对于有参考基因组的物种,根据比对结果,我们使用soapsnp<sup>[<a href="#cite3">3</a>]</sup>软件综合考虑数据特征、测序质量及实验方面的影响因素，利用贝叶斯模型，在实际观察到的数据基础上计算出每个可能的基因型概率。挑选出概率最大的基因型作为该测序个体在特定位点的基因型，在此基础上给出一个反映该基因型准确度的质量值,并得到一致序列（一组含有位点比对信息的参考序列）。在一致序列的基础上，对于参考序列上存在着多态性的位点进行筛选和过滤，符合以下四个条件的SNP位点将予以保留：</p>
+<ul>
+<li{list-style:none;}>1)质量值在20以上；</li><br />
+<li{list-style:none;}>2)Copy number数小于等于1.5（指覆盖该位点reads的深度）；</li><br />
+<li{list-style:none;}>3)SNP位点彼此至少相隔5bp；</li><br />
+<li{list-style:none;}>4)秩和检验值大于等于0.05。</li><br />
+</ul>
+<p>对于无参考基因组的物种，我们使用NPGT软件包中的radsnp，通过聚类来进行read1上的SNP检测。<p>
+<div class="title"><span class="h3">6. 基因分型</span></div>
+<p>整合各个样品的SNP检测结果，过滤掉在样品中缺失率较大（默认大于等于50%）的SNP位点，生成分型列表。<p>
+<div class="title"><span class="h3">7. 系统发育分析</span></div>
+<p>系统进化树(phylogenetic tree，又称evolutionary tree进化树)就是描述群体间进化顺序的分支图或树，表示群体间的进化关系。进行SNP检测之后，得到的个体SNPs可以用于计算种群之间的距离。两个体i和j之间的p-距离通过如下公式计算：<br /><div align="center"> D<sub>ij</sub>=/LΣd<sub>ij</sub><sup>(l)</sup>/L (l=1,2,...,L)</p></div>
+<p>公式中L为高质量SNPs区域长度，在位置1的等位基因为A/C,那么</p>
+<div align="center">
+<table>
+<tr><td>d<sub>ij</sub><sup>(l)</sup>=0</td><td>如果两个个体的基因型是AA和AA</td></tr>
+<tr><td>d<sub>ij</sub><sup>(l)</sup>=0.5</td><td>如果两个个体的基因型是AA和AC</td></tr>
+<tr><td>d<sub>ij</sub><sup>(l)</sup>=0.5</td><td>如果两个个体的基因型是AC和AC</td></tr>
+<tr><td>d<sub>ij</sub><sup>(l)</sup>=1</td><td>如果两个个体的基因型是AA和CC</td></tr>
+</table>
+</div>
+<p>运用MEGA5.0<sup>[<a href="#cite4">4</a>]</sup>（http://mega.software.informer.com/5.0/）或TreeBeST(http://treesoft.sourceforge.net/treebest.shtml)或PHYLIP（http://evolution.genetics.washington.edu/phylip.html）软件计算距离矩阵，以此为基础，通过邻接法（neighbor-joining method）构建系统进化树，重复计算引导值（bootstrap values）达1000次，计算基于所有的SNPs。</p>
+<div class="title"><span class="h3">8. 主成分分析</span></div>
+<p>主成分分析（Principal Component Analysis, PCA）是指通过线性变换找出数据集中对方差贡献最大的主要成分，以降低数据复杂度的一种分析。为减少数据干扰，此分析仅用于常染色体SNP数据，且忽略出现多余2个等位基因的位点以及错配数据。</p>
+<p>在个体i中，k位点的SNP用d<sub>ik</sub>表示，若个体i与参考等位基因是纯合，d<sub>ik</sub>=0；如果是杂合，d<sub>ik</sub>=1；如果个体i与非参考等位基因是纯合，d<sub>ik</sub>=2。M是一个包含标准基因型的n ×S的矩阵：<br /><div align="center"><img src="./images/PCA_matrix_formula.png" style="width:300px"/></div></p>
+<p>公式中E(d<sub>ik</sub>)是d<sub>k</sub>的平均值，个体样本协方差n×n矩阵通过X=MM<sup>T</sup>/S进行计算。X的特征向量分解应用功能特征函数R完成。我们使用EIGENSOFT<sup>[<a href="#cite5">5</a>]</sup>软件提供的twstats 程序进行Tracey-Widom 检验得到特征向量的显著性分析。</p>
+<div class="title"><span class="h3">9. 群体结构分析</span></div>
+<p>群体遗传结构指遗传变异在物种或群体中的一种非随机分布。按照地理分布或其他标准可将一个群体分为若干亚群，处于同一亚群内的个体亲缘关系较高，而亚群与亚群之间则亲缘关系稍远。群体结构分析有助于理解进化过程，并且可以通过基因型和表型的关联研究确定个体所属的亚群。FRAPPE<sup>[<a href="#cite6">6</a>]</sup>应用最大似然法来推断在假设个体来自于K个祖先群的情况下，每个个体的遗传祖先。</p>
+
+
+
+<h2 class="break"><a name="file"></a>二、参考文献</h2>
+<ol>
+<li><a name="cite1"></a>Li R.,Yu C.,Li Y.,<i>et al</i>.(2009).SOAP2:An improved ultrafast tool for short read alignment.Bioinformatics,25(15).1966-1967.</li>
+<li><a name="cite2"></a>J. Catchen,A. Amores,P. Hohenlohe,W. Cresko, and J. Postlethwait.Stacks:building and genotyping loci denovo from short-read sequences.G3: Genes,Genomes,Genetics,1:171-182,2011.</li>
+<li><a name="cite3"></a>Ruiqiang Li, Yingrui Li, Xiaodong Fang,<i>et al</i>.(2009)SNP detection for massively parallel whole-genome resequencing Genome Res.,doi:10.1101/gr.088013.108.</li>
+<li><a name="cite4"></a>Koich iro Tamura,<i>et al</i>. MEGA4:Molecular Evolutionary Genetics Analysis (MEGA) Software Version 4.0.Mol Biol Evol (2007)24(8):1596-1599.doi:10.1093/molbev/msm092.</li>
+<li><a name="cite5"></a>Alkes L Price, Patterson NJ,Plenge RM,Weinblatt ME,Shadick NA,Reich D.(2006) Principal components analysis corrects for stratification in genome-wide association studies.Nature Genetics 38,904-909.</li>
+<li><a name="cite6"></a>Tang,H.,Peng,J.,Wang,P.& Risch,N.J. Estimation of individual admixture:analytical and study design considerations.Genet.Epidemiol.28,289–301(2005).</li>
+</ol>
+
+<h2 class="break"><a name="list"></a>三、分析结果文件列表</h2>
+<pre>﻿upload<br />|---- Cleandata                     cleanreads文件夹<br />|     |---  A.fq.gz                 A样品cleanreads<br />|     |---  B.fq.gz                 B样品cleanreads<br />|---- Data.stat.xls                 所有样品数据统计列表<br />|---- SNP.stat.xls                  所有样品SNP 统计列表<br />|---- Genotype.xls                  所有样品的基因分型结果<br />|---- tree                          系统发育树结果目录<br />|     |---  nj_tree.out.tre.png     系统发育树分析结果(png格式)<br />|     |---  nj_tree.out.tre.svg     系统发育树分析结果(SVG格式)<br />|---- PCA                           PCA分析结果目录<br />|     |---  1-2.png                 第1组分与第2组分贡献率<br />|     |---  1-3.png                 第1组分与第3组分贡献率<br />|     |---  m-n.png                 第m组分与第n组分贡献率<br />|---- structure                     群体结构分析结果目录<br />|     |---  STRUCTURE.png           群体结构分析结果(png格式)<br />|     |---  STRUCTURE.svg           群体结构分析结果(SVG格式)<br />|---- index.html                    中文版网页结题报告 <br />|---- index_en.html                 英文版网页结题报告</pre>
+</body>
+</html>
