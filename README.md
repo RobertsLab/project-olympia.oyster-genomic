@@ -19,7 +19,10 @@ Project Status - Active
 
 
 ### Manuscripts:    
-* 
+* PREPRINT: Genotoype-by-sequencing of three geographically distinct populations of Olympia oysters, <em>Ostrea lurida</em> (2017) White, S.J., Vadopalas, B., Silliman, K., Roberts S.B. <em>Scientific Data</em>    
+
+    Preprint (PDF): https://osf.io/cdj7m/     
+    ![status](https://img.shields.io/badge/pub--a--thon%20status-submitted-green.svg)
 
 
 
