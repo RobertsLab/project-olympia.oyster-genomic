@@ -16,6 +16,7 @@ Project Status - Active
 - [Whole Genome BS-Seq](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Whole-genome-BSseq-December-2015)
 - [MBD-BS-Seq](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/MBD-BSseq-December-2015)
 - [Genotype-by-sequencing](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Genotype-by-sequencing-November-2015)
+- [Genome Assemblies](https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/Genome-Assemblies)
 
 
 ### Manuscripts:    
